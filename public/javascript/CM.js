@@ -130,7 +130,7 @@ class ColorMatch {
         
         let delay = await this.calculateDuration(_url);
 
-       //this.hideGifOverlay(delay);
+       this.hideGifOverlay(delay);
     }
 
     hideGifOverlay(delay) {
