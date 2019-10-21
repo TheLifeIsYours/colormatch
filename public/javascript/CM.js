@@ -9,37 +9,52 @@ class ColorMatch {
 
         this.cmElements = [];
 
+        // Header
         this.headerElementContainer = this.addElement('div', 'headerElementContainer', this.applicationAnchor);
         this.headerElementContainer.setStyle('flex', 'row', 'center', 'alignCenter', 'h6em', 'bgDark0_6');
 
+        // Burger Menu
+        this.haderElementBurgerMenu = this.addElement('div', 'headerElementBurgerMenu', this.headerElementContainer);
+        this.haderElementBurgerMenu.setStyle('flex', 'column', 'center', 'alignCenter', 'w3em', 'h3em');
+
+        // Header Title
         this.headerElementTitle = this.addElement('div', 'headerElementTitle', this.headerElementContainer);
         this.headerElementTitle.setStyle('fs3em');
         this.headerElementTitle.element.innerHTML = "Color Match";
 
+        // Gif Overlay Container
         this.gifOverlayElementContainer = this.addElement('div', 'gifOverlayElementContainer', this.applicationAnchor);
         this.gifOverlayElementContainer.setStyle('absolute', 't0em', 'l0em', 'flex', 'column', 'center', 'alignCenter', 'w100pc', 'h100pc', 'bgDark0_8', 'hidden');
         this.gifOverlayElementContainer.setTriggerEvent('click', this.hideGifOverlay(0));
 
+        // Gif Overlay Text Display 
         this.gifOverlayElementText = this.addElement('div', 'gifOverlayElementText', this.gifOverlayElementContainer);
         this.gifOverlayElementText.setStyle('fs5em', 'm1em', 'textCenter');
 
+        // Gif Overlay Image Display
         this.gifOverlayElementImageContainer = this.addElement('div', 'gifOverlayElementImageContainer', this.gifOverlayElementContainer);
         this.gifOverlayElementImageContainer.setStyle('flex', 'center', 'alignCenter', 'w90pc', 'h50pc');
 
+        // Answer Element Container
         this.answerElementContainer = this.addElement('div', 'answerElementContainer', this.applicationAnchor);
         this.answerElementContainer.setStyle('flex', 'row', 'center');
         
+        // Answer Element
         this.answerElementColor = this.addElement('div', 'answerElementColor', this.answerElementContainer);
         this.answerElementColor.setStyle('w20em', 'h20em', 'bgLight1');
         
+        // Alternative Answers Element Container
         this.altElementContainer = this.addElement('div', 'alternativeElementsContainer', this.applicationAnchor);
         this.altElementContainer.setStyle('flex', 'row', 'evenly', 'wrap');
 
+        // Stats Elements Container
         this.statsElementContainer = this.addElement('div', 'statsElementContainer', this.applicationAnchor);
         this.statsElementContainer.setStyle('flex', 'row', 'evenly', 'alignCenter', 'fs2em', 'h5em', 'bgDark0_3');
 
+        // Status Elements Array
         this.statusElements = [];
 
+        // Status Element json data
         this.stats = {
             "Guesses": 0,
             "Correct": 0,
@@ -49,11 +64,13 @@ class ColorMatch {
         this.initialize(this.applicationAnchor);
     }
 
+    // Initialize app on startup
     initialize() {
         this.newAlternatives();
         this.newStats();
     }
 
+    // User Click Answer Alternative handler
     guessColor(_event) {
         let _cmElement = this.getCMElement(_event.target);
         _cmElement.unsetStyle('scale1_2', 'bSolid', 'bcLight1', 'bw0_2em');
@@ -69,6 +86,7 @@ class ColorMatch {
         this.updateStatusElements();
     }
 
+    // User Answer Correct handler
     correctAnswer() {
         this.stats.Guesses += 1;
         this.stats.Correct += 1;
@@ -78,6 +96,7 @@ class ColorMatch {
         this.gifOverlayElementText.setStyle('cGreen');
     }
 
+    // User Answer Wrong handler
     wrongAnswer() {
         this.stats.Guesses += 1;
         this.stats.Wrongs += 1;
@@ -87,6 +106,7 @@ class ColorMatch {
         this.gifOverlayElementText.setStyle('cRed');
     }
 
+    // XMLHttp Get function
     request(_url, options) {
         console.log(_url);
 
@@ -110,6 +130,7 @@ class ColorMatch {
         });
     }
 
+    // Async Get Gif function
     async getGif(tag){
         let response = await this.request(`https://api.giphy.com/v1/gifs/random?tag=${tag}&api_key=${this.GIPHY_API_KEY}&limit=5`)
         .then((res) => {
@@ -121,6 +142,7 @@ class ColorMatch {
         this.displayGif(response.data.image_url);
     }
 
+    // Async Display Gif function
     async displayGif(_url) {
         let _cmElement = this.addElement('img', 'gifOverlayElementImage', this.gifOverlayElementImageContainer);
         _cmElement.setStyle('wInherit', 'hInherit', 'max-w100pc', 'max-h100pc');
@@ -133,6 +155,7 @@ class ColorMatch {
        this.hideGifOverlay(delay);
     }
 
+    // Hide Gif function
     hideGifOverlay(delay) {
         delay = delay || 0;
         setTimeout(() => {
@@ -142,7 +165,7 @@ class ColorMatch {
         }, delay);
     }
 
-    /*Calculate gif duration*/
+    // Calculate Gif Duration
     async calculateDuration(_url) {
         return new Promise((resolve, reject) => {
             this.request(_url, {"responseType": "arraybuffer"})
@@ -175,6 +198,7 @@ class ColorMatch {
         });
     }
 
+    // New Alternatives
     newAlternatives() {
         for (let i = 0; i < this.alternatives; i++) {
             let _cmElement = this.addElement('div', `display${i}`, this.altElementContainer);
@@ -182,21 +206,16 @@ class ColorMatch {
             _cmElement.setColor();
             
             _cmElement.setTriggerEvent('click', (e) => this.guessColor(e));
-            _cmElement.setTriggerEvent('mouseover', (e) => this.hoverIn(e));
-            _cmElement.setTriggerEvent('mouseout', (e) => this.hoverOut(e));
+
+            // Hover Over Answer Alternative Effect
+            _cmElement.setTriggerEvent('mouseover', (_event) => this.getCMElement(_event.target).setStyle('scale1_2', 'bSolid', 'bcLight1', 'bw0_2em'));
+            _cmElement.setTriggerEvent('mouseout', (_event) => this.getCMElement(_event.target).unsetStyle('scale1_2', 'bSolid', 'bcLight1', 'bw0_2em'));
         }
         
         this.answerElementColor.setColor(this.getRandomElementColor());
     }
 
-    hoverIn(_event){
-        this.getCMElement(_event.target).setStyle('scale1_2', 'bSolid', 'bcLight1', 'bw0_2em');
-    }
-
-    hoverOut(_event){
-        this.getCMElement(_event.target).unsetStyle('scale1_2', 'bSolid', 'bcLight1', 'bw0_2em');
-    }
-
+    // Create New Stats based on Stats json data
     newStats() {
         Object.keys(this.stats).forEach((key) => {
             let _cmElement = this.addElement('div', `statsElement${key}`, this.statsElementContainer);
@@ -208,6 +227,7 @@ class ColorMatch {
         });
     }
 
+    // Add New Color Match Element 
     addElement(_type, _id, _anchor) {
         _anchor = _anchor.element || this.applicationAnchor;
 
@@ -219,6 +239,7 @@ class ColorMatch {
         return _cmElement;
     }
 
+    // Get Color Match Element
     getCMElement(_element) {
         let res = null;
 
@@ -231,11 +252,13 @@ class ColorMatch {
         return res;
     }
 
+    // Get Random Answer Alternative Element Color
     getRandomElementColor() {
         let rnd = Math.floor(Math.random() * this.altElementContainer.element.children.length);
         return this.getCMElement(this.altElementContainer.element.children[rnd]).cmColor;
     }
 
+    // Update Status Element
     updateStatusElements() {
         Object.keys(this.stats).forEach((key) => {
             this.statusElements.forEach((statusElement) => {
@@ -247,11 +270,13 @@ class ColorMatch {
         });
     }
 
+    // Make New Alternative Colors
     newColors() {
         this.removeCMElementChildren(this.altElementContainer);
         this.newAlternatives();
     }
 
+    // Remove Color Match Element Children and DOM Elements
     removeCMElementChildren (_cmElementParent) {
         while(_cmElementParent.element.firstChild) {
             let cmElement = this.getCMElement(_cmElementParent.element.firstChild);
