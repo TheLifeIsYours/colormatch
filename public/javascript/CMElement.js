@@ -58,7 +58,14 @@ class CMElement {
     }
 
     setTriggerEvent(event, callback) {
-        this.element.addEventListener(event, callback);
+        this.element.addEventListener(event, (element) => {
+            console.log(element);
+            console.log(this);
+        });
+    }
+
+    callback_test() {
+        console.log(this);
     }
 
     destroy(){

@@ -18,6 +18,7 @@ class ColorMatch {
 
         this.gifOverlayElementContainer = this.addElement('div', 'gifOverlayElementContainer', this.applicationAnchor);
         this.gifOverlayElementContainer.setStyle('absolute', 't0em', 'l0em', 'flex', 'column', 'center', 'alignCenter', 'w100pc', 'h100pc', 'bgDark0_8', 'hidden');
+        this.gifOverlayElementContainer.setTriggerEvent('click', this.hideGifOverlay(0));
 
         this.gifOverlayElementText = this.addElement('div', 'gifOverlayElementText', this.gifOverlayElementContainer);
         this.gifOverlayElementText.setStyle('fs5em', 'm1em');
@@ -128,8 +129,12 @@ class ColorMatch {
         this.gifOverlayElementContainer.unsetStyle('hidden');
         
         let delay = await this.calculateDuration(_url);
-        console.log(delay);
 
+        this.hideGifOverlay(delay);
+    }
+
+    hideGifOverlay(delay) {
+        delay = delay || 0;
         setTimeout(() => {
             this.gifOverlayElementContainer.setStyle('hidden');
             this.removeCMElementChildren(this.gifOverlayElementImageContainer);
