@@ -17,6 +17,8 @@ class CMStyles {
         "evenly": {"property": 'justify-content', "attribute": 'space-evenly'},
         "between": {"property": 'justify-content', "attribute": 'space-between'},
         "alignCenter": {"property": 'align-items', "attribute": 'center'},
+
+        "textCenter": {"property": 'text-align', "attribute": 'center'},
         
         "pointer": {"property": 'cursor', "attribute": 'pointer'},
 
@@ -64,6 +66,9 @@ class CMStyles {
         "scale1_5": {"property": 'transform', "attribute": 'scale(1.5)'},
         "scale2": {"property": 'transform', "attribute": 'scale(2)'},
 
+        "wInherit": {"property": 'width', "attribute": 'inherit'},
+        "hInherit": {"property": 'height', "attribute": 'inherit'},
+
         "w0em": {"property": 'width', "attribute": '0em'},
         "w1em": {"property": 'width', "attribute": '1em'},
         "w2em": {"property": 'width', "attribute": '2em'},
@@ -82,6 +87,7 @@ class CMStyles {
         "w25pc": {"property": 'width', "attribute": '20%'},
         "w50pc": {"property": 'width', "attribute": '50%'},
         "w75pc": {"property": 'width', "attribute": '75%'},
+        "w90pc": {"property": 'width', "attribute": '90%'},
         "w100pc": {"property": 'width', "attribute": '100%'},
 
         "max-w25pc": {"property": 'max-width', "attribute": '25%'},
@@ -107,6 +113,7 @@ class CMStyles {
         "h25pc": {"property": 'height', "attribute": '25%'},
         "h50pc": {"property": 'height', "attribute": '50%'},
         "h75pc": {"property": 'height', "attribute": '75%'},
+        "h90pc": {"property": 'height', "attribute": '90%'},
         "h100pc": {"property": 'height', "attribute": '100%'},
         
 

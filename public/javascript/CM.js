@@ -21,10 +21,10 @@ class ColorMatch {
         this.gifOverlayElementContainer.setTriggerEvent('click', this.hideGifOverlay(0));
 
         this.gifOverlayElementText = this.addElement('div', 'gifOverlayElementText', this.gifOverlayElementContainer);
-        this.gifOverlayElementText.setStyle('fs5em', 'm1em');
+        this.gifOverlayElementText.setStyle('fs5em', 'm1em', 'textCenter');
 
         this.gifOverlayElementImageContainer = this.addElement('div', 'gifOverlayElementImageContainer', this.gifOverlayElementContainer);
-        this.gifOverlayElementImageContainer.setStyle('flex', 'center', 'w100pc', 'h50pc');
+        this.gifOverlayElementImageContainer.setStyle('flex', 'center', 'alignCenter', 'w90pc', 'h50pc');
 
         this.answerElementContainer = this.addElement('div', 'answerElementContainer', this.applicationAnchor);
         this.answerElementContainer.setStyle('flex', 'row', 'center');
@@ -123,14 +123,14 @@ class ColorMatch {
 
     async displayGif(_url) {
         let _cmElement = this.addElement('img', 'gifOverlayElementImage', this.gifOverlayElementImageContainer);
-        _cmElement.setStyle('h100pc', 'max-w75pc');
+        _cmElement.setStyle('wInherit', 'hInherit', 'max-w100pc', 'max-h100pc');
         _cmElement.element.src = _url;
 
         this.gifOverlayElementContainer.unsetStyle('hidden');
         
         let delay = await this.calculateDuration(_url);
 
-        this.hideGifOverlay(delay);
+       //this.hideGifOverlay(delay);
     }
 
     hideGifOverlay(delay) {
