@@ -10,14 +10,6 @@ class CMElement {
         this.cmStyle = this.element.style;
 
         this.cmColor = this.cmStyle.background;
-
-        this.cmSize = new cmVect2();
-        this.cmWidth = this.cmStyle.width;
-        this.cmHeight = this.cmStyle.height;
-
-        this.cmPos = new cmVect2();
-        this.cmLeft = this.cmStyle.left;
-        this.cmTop = this.cmStyle.top;
     }
 
     setStyle() {
@@ -26,6 +18,10 @@ class CMElement {
 
     unsetStyle() {
         this.cmStyles.unsetStyle(this.cmStyle, Array.from(arguments));
+    }
+
+    rotate(_deg) {
+        this.cmStyle.transform = `rotate(${_deg}deg)`;
     }
 
     setColor() {
@@ -47,22 +43,8 @@ class CMElement {
         this.cmColor = _color;
     }
 
-    setPosition(_cmVect2) {
-        this.cmLeft = _cmVect2.x;
-        this.cmRight = _cmVect2.y;
-    }
-
-    setSize(_cmVect2) {
-        this.cmWidth = _cmVect2.x;
-        this.cmHeight = _cmVect2.y;
-    }
-
     setTriggerEvent(event, callback) {
         this.element.addEventListener(event, callback);
-    }
-
-    callback_test() {
-        console.log(this);
     }
 
     destroy(){

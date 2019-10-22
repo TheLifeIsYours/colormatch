@@ -11,21 +11,79 @@ class ColorMatch {
 
         // Header
         this.headerElementContainer = this.addElement('div', 'headerElementContainer', this.applicationAnchor);
-        this.headerElementContainer.setStyle('flex', 'row', 'center', 'alignCenter', 'h6em', 'bgDark0_6');
+        this.headerElementContainer.setStyle('flex', 'row', 'between', 'alignCenter', 'h6em', 'bgDark0_6');
 
+        /* Start Of Burger Menu */
         // Burger Menu
-        this.haderElementBurgerMenu = this.addElement('div', 'headerElementBurgerMenu', this.headerElementContainer);
-        this.haderElementBurgerMenu.setStyle('flex', 'column', 'center', 'alignCenter', 'w3em', 'h3em');
+        this.headerElementBurgerMenuIcon = this.addElement('div', 'headerElementBurgerMenu', this.headerElementContainer);
+        this.headerElementBurgerMenuIcon.setStyle('flex', 'column', 'evenly', 'alignCenter', 'w2em', 'h2_5em', 'ml2em', 'pointer');
+        
+        /*  Start Of Burger Menu Icon */
+        this.headerElementBurgerMenuIcon_1 = this.addElement('div', '', this.headerElementBurgerMenuIcon);
+        this.headerElementBurgerMenuIcon_1.setStyle('w100pc', 'h0_25em', 'bgLight1');
+
+        this.headerElementBurgerMenuIcon_2 = this.addElement('div', '', this.headerElementBurgerMenuIcon);
+        this.headerElementBurgerMenuIcon_2.setStyle('w100pc', 'h0_25em', 'bgLight1');
+        
+        this.headerElementBurgerMenuIcon_3 = this.addElement('div', '', this.headerElementBurgerMenuIcon);
+        this.headerElementBurgerMenuIcon_3.setStyle('w100pc', 'h0_25em', 'bgLight1');
+        /* End Of Burger Menu Icon */
+
+        // Burger Menu Overlay
+        this.burgerMenuOverlay = this.addElement('div', 'burgerMenuOverlay', this.applicationAnchor);
+        this.burgerMenuOverlay.setStyle('absolute', 't0em', 'l0em', 'flex', 'column', 'between', 'bgDark0_8', 'w100pc', 'h100pc', 'hidden');
+
+        // Burger Menu Header
+        this.burgerMenuHeader = this.addElement('div', 'burgerMenuHeader', this.burgerMenuOverlay);
+        this.burgerMenuHeader.setStyle('flex', 'row', 'between', 'alignCenter', 'h6em', 'bgDark0_6');
+        
+        this.burgerMenuCloseIconContainer = this.addElement('div', 'burgerMenuCloseIcon', this.burgerMenuHeader);
+        this.burgerMenuCloseIconContainer.setStyle('flex', 'column', 'evenly', 'alignCenter', 'w2em', 'h2_5em', 'ml2em', 'pointer');
+        
+        // Burger Close Icon
+        this.burgerMenuCloseIconImage = this.addElement('img', '', this.burgerMenuCloseIconContainer);
+        this.burgerMenuCloseIconImage.element.src = "public/images/icons/X.png";
+        this.burgerMenuCloseIconImage.setStyle('w100pc');
+        
+        // Burger Menu Title
+        this.burgerMenuHeaderTitle = this.addElement('div', 'burgerMenuHeaderTitle', this.burgerMenuHeader);
+        this.burgerMenuHeaderTitle.element.innerHTML = "Settings";
+        this.burgerMenuHeaderTitle.setStyle('fs3em');
+
+        // Spacing Element
+        this.spacingElement = this.addElement('div', 'headerSpacerElement', this.burgerMenuHeader);
+
+        // Burger Menu Row
+        this.burgerMenuSettings = this.addElement('div', 'burgerMenuSettings', this.burgerMenuOverlay);
+        this.burgerMenuSettings.setStyle('flex', 'column', 'center', 'alignCenter', 'grow');
+
+        this.amountSettings = this.addElement('div', 'amountSettings', this.burgerMenuSettings);
+        
+
+        // Burger Menu Icon On Click
+        this.headerElementBurgerMenuIcon.setTriggerEvent('click', (_event) => {
+            this.headerElementBurgerMenuIcon.setStyle('hidden');
+            this.burgerMenuOverlay.unsetStyle('hidden');
+        });
+
+        this.burgerMenuCloseIconContainer.setTriggerEvent('click', (_event) => {
+            this.headerElementBurgerMenuIcon.unsetStyle('hidden');
+            this.burgerMenuOverlay.setStyle('hidden');
+        });
+        /* End Of Burger Menu */
 
         // Header Title
         this.headerElementTitle = this.addElement('div', 'headerElementTitle', this.headerElementContainer);
-        this.headerElementTitle.setStyle('fs3em');
         this.headerElementTitle.element.innerHTML = "Color Match";
+        this.headerElementTitle.setStyle('fs3em');
+        
+        // Spacing Element
+        this.spacingElement = this.addElement('div', 'headerSpacerElement', this.headerElementContainer);
 
         // Gif Overlay Container
         this.gifOverlayElementContainer = this.addElement('div', 'gifOverlayElementContainer', this.applicationAnchor);
         this.gifOverlayElementContainer.setStyle('absolute', 't0em', 'l0em', 'flex', 'column', 'center', 'alignCenter', 'w100pc', 'h100pc', 'bgDark0_8', 'hidden');
-        this.gifOverlayElementContainer.setTriggerEvent('click', this.hideGifOverlay(0));
+        this.gifOverlayElementContainer.setTriggerEvent('click', this.hideGifOverlay());
 
         // Gif Overlay Text Display 
         this.gifOverlayElementText = this.addElement('div', 'gifOverlayElementText', this.gifOverlayElementContainer);
@@ -37,7 +95,7 @@ class ColorMatch {
 
         // Answer Element Container
         this.answerElementContainer = this.addElement('div', 'answerElementContainer', this.applicationAnchor);
-        this.answerElementContainer.setStyle('flex', 'row', 'center');
+        this.answerElementContainer.setStyle('flex', 'row', 'center', 'h20pc');
         
         // Answer Element
         this.answerElementColor = this.addElement('div', 'answerElementColor', this.answerElementContainer);
@@ -58,7 +116,7 @@ class ColorMatch {
         this.stats = {
             "Guesses": 0,
             "Correct": 0,
-            "Wrongs": 0
+            "Wrong": 0
         };
 
         this.initialize(this.applicationAnchor);
@@ -99,7 +157,7 @@ class ColorMatch {
     // User Answer Wrong handler
     wrongAnswer() {
         this.stats.Guesses += 1;
-        this.stats.Wrongs += 1;
+        this.stats.Wrong += 1;
 
         this.getGif("wrong, fail, error, no");
         this.gifOverlayElementText.element.innerHTML = "You guessed wrong!";
