@@ -22,11 +22,41 @@ class CMElement {
         return this;
     }
 
-    rotate(_deg) {
-        this.cmStyle.transform = `rotate(${_deg}deg)`;
+    setAttribute(_name, _value) {
+        this.element.setAttribute(_name, Array([_value]));
+        return this;
     }
 
-    setColor() {
+    background(_color) {
+        this.cmStyle.background = _color;
+        return this;
+    }
+
+    color(_color) {
+        this.cmStyle.color = _color;
+        return this;
+    }
+
+    rotate(_deg) {
+        this.cmStyle.transform = `rotate(${_deg}deg)`;
+        return this;
+    }
+
+    content(_content) {
+        this.element.innerHTML = _content;
+        return this;
+    }
+
+    append(_type, _id, _cmMatch) {
+        let _cmElement = new CMElement(_type, _id, this.element);
+
+        _cmMatch.cmElements.push(_cmElement);
+        _cmElement.anchor.append(_cmElement.element);
+        
+        return _cmElement;
+    }
+
+    setCmColor() {
         //rgba(255, 255, 255)
         //255, 255, 255
         let _color = null;

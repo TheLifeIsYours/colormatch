@@ -72,7 +72,13 @@ class CMStyles {
 
         "t0em": {"property": 'top', "attribute": '0em'},
 
+        "t50pc": {"property": 'top', "attribute": '50%'},
+
         "l0em": {"property": 'left', "attribute": '0em'},
+
+        "l50pc": {"property": 'left', "attribute": '50%'},
+
+        "translateCenter": {"property": 'transform', "attribute": 'translate(-50%, -50%)'},
 
         "scale1": {"property": 'transform', "attribute": 'scale(1)'},
         "scale1_05": {"property": 'transform', "attribute": 'scale(1.05)'},
@@ -226,6 +232,30 @@ class CMStyles {
         "bgDark0_8": {"property": 'background', "attribute": 'rgba(0, 0, 0, .8)'},
         "bgDark0_9": {"property": 'background', "attribute": 'rgba(0, 0, 0, .9)'},
         "bgDark0": {"property": 'background', "attribute": 'rgba(0, 0, 0, 0)'},
+  
+        "bgRed1": {"property": 'background', "attribute": 'rgba(255, 0, 0, 1)'},
+        "bgRed0_1": {"property": 'background', "attribute": 'rgba(255, 0, 0, .1)'},
+        "bgRed0_2": {"property": 'background', "attribute": 'rgba(255, 0, 0, .2)'},
+        "bgRed0_3": {"property": 'background', "attribute": 'rgba(255, 0, 0, .3)'},
+        "bgRed0_4": {"property": 'background', "attribute": 'rgba(255, 0, 0, .4)'},
+        "bgRed0_5": {"property": 'background', "attribute": 'rgba(255, 0, 0, .5)'},
+        "bgRed0_6": {"property": 'background', "attribute": 'rgba(255, 0, 0, .6)'},
+        "bgRed0_7": {"property": 'background', "attribute": 'rgba(255, 0, 0, .7)'},
+        "bgRed0_8": {"property": 'background', "attribute": 'rgba(255, 0, 0, .8)'},
+        "bgRed0_9": {"property": 'background', "attribute": 'rgba(255, 0, 0, .9)'},
+        "bgRed0": {"property": 'background', "attribute": 'rgba(255, 0, 0, 0)'},
+  
+        "bgGreen1": {"property": 'background', "attribute": 'rgba(0, 255, 0, 1)'},
+        "bgGreen0_1": {"property": 'background', "attribute": 'rgba(0, 255, 0, .1)'},
+        "bgGreen0_2": {"property": 'background', "attribute": 'rgba(0, 255, 0, .2)'},
+        "bgGreen0_3": {"property": 'background', "attribute": 'rgba(0, 255, 0, .3)'},
+        "bgGreen0_4": {"property": 'background', "attribute": 'rgba(0, 255, 0, .4)'},
+        "bgGreen0_5": {"property": 'background', "attribute": 'rgba(0, 255, 0, .5)'},
+        "bgGreen0_6": {"property": 'background', "attribute": 'rgba(0, 255, 0, .6)'},
+        "bgGreen0_7": {"property": 'background', "attribute": 'rgba(0, 255, 0, .7)'},
+        "bgGreen0_8": {"property": 'background', "attribute": 'rgba(0, 255, 0, .8)'},
+        "bgGreen0_9": {"property": 'background', "attribute": 'rgba(0, 255, 0, .9)'},
+        "bgGreen0": {"property": 'background', "attribute": 'rgba(0, 255, 0, 0)'},
         
         "m0_1em": {"property": 'margin', "attribute": '0.1em'},
         "m0_2em": {"property": 'margin', "attribute": '0.2em'},
