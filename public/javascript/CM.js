@@ -182,7 +182,7 @@ class ColorMatch {
         this.gifOverlayElementContainer = this.addElement('div', 'gifOverlayElementContainer', this.applicationAnchor)
         .setStyle('absolute', 't0em', 'l0em', 'flex', 'column', 'center', 'alignCenter', 'w100pc', 'h100pc', 'bgDark0_8', 'hidden', 'pointer')
         .setTriggerEvent('click', () => {
-            this.hideGifOverlay()
+            this.hideGifOverlay(0);
         });
 
         // Gif Overlay Text Display 
@@ -241,10 +241,8 @@ class ColorMatch {
         //this.answerElementColor.setStyle('hidden');
         
         if(_cmElement.cmColor == this.answerElementColor.cmColor){
-            console.log("Correct guess");
             this.correctAnswer();
         } else {
-            console.log("Wrong guess");
             this.wrongAnswer();
         }
 
@@ -298,8 +296,6 @@ class ColorMatch {
 
     // XMLHttp Get function
     request(_url, options) {
-        console.log(_url);
-
         return new Promise((resolve, reject) => {
             let http = new XMLHttpRequest();
 
@@ -342,13 +338,13 @@ class ColorMatch {
         
         let delay = await this.calculateDuration(_url);
 
-       this.hideGifOverlay(delay);
+        if(delay <= 2000) delay *= 3;
+
+        this.hideGifOverlay(delay);
     }
 
     // Hide Gif function
     async hideGifOverlay(_delay) {
-        _delay = _delay || 0;
-
         await this.sleep(_delay);
 
         if(this.gifOverlayElementImageContainer.element.hasChildNodes()) {
@@ -486,7 +482,6 @@ class ColorMatch {
     // Get Random Answer Alternative Element Color
     getRandomElementColor() {
         let rnd = Math.floor(Math.random() * this.altElementContainer.element.children.length);
-        console.log(this.altElementContainer.element.children);
         return this.getCMElement(this.altElementContainer.element.children[rnd]).cmColor;
     }
 
@@ -507,7 +502,6 @@ class ColorMatch {
 
     getCookie(_key) {
         let cookies = document.cookie.split(';');
-        //console.log(cookies);
     
         for(let cookie of cookies) {
             let cookieArr = cookie.split('=');
