@@ -8,13 +8,13 @@ html, body {
   body {
     font-family: Arial, sans-serif;
     color: #e2e2e2;
+    background: #272727;
   }
   
   #main {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    background: #272727;
-    width: inherit;
-    height: inherit;
+    justify-content: start;
+    width: 100%;
+    height: 100%;
   }

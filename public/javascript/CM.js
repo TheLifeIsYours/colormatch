@@ -11,7 +11,7 @@ class ColorMatch {
 
         // Header
         this.headerElementContainer = this.addElement('div', 'headerElementContainer', this.applicationAnchor);
-        this.headerElementContainer.setStyle('flex', 'row', 'between', 'alignCenter', 'h6em', 'bgDark0_6');
+        this.headerElementContainer.setStyle('flex', 'row', 'between', 'alignCenter', 'h5em', 'min-h5em', 'bgDark0_6');
 
         /* Start Of Burger Menu */
         // Burger Menu
@@ -35,7 +35,7 @@ class ColorMatch {
 
         // Burger Menu Header
         this.burgerMenuHeader = this.addElement('div', 'burgerMenuHeader', this.burgerMenuOverlay);
-        this.burgerMenuHeader.setStyle('flex', 'row', 'between', 'alignCenter', 'h6em', 'bgDark0_6');
+        this.burgerMenuHeader.setStyle('flex', 'row', 'between', 'alignCenter', 'h5em', 'min-h5em', 'bgLight0_2');
         
         this.burgerMenuCloseIconContainer = this.addElement('div', 'burgerMenuCloseIcon', this.burgerMenuHeader);
         this.burgerMenuCloseIconContainer.setStyle('flex', 'column', 'evenly', 'alignCenter', 'w2em', 'h2_5em', 'ml2em', 'pointer');
@@ -59,16 +59,19 @@ class ColorMatch {
 
         // Amount Settings Container
         this.amountSetting = this.addElement('div', 'amountSetting', this.burgerMenuSettingsContainer);
+        this.amountSetting.setStyle('flex', 'row', 'center', 'alignCenter');
         
         // Amount Settings Button - Less
         this.amountSettingLess = this.addElement('div', 'amountSettingLess', this.amountSetting);
-        this.amountSettingLess.element.text = "-";
+        this.amountSettingLess.setStyle('flex', 'center', 'alignCenter', 'textCenter', 'fs2em', 'w1_25em', 'h0_5em', 'bgLight0_2', 'm0_5em', 'p0_25em', 'pointer');
+        this.amountSettingLess.element.innerHTML = "-";
         this.amountSettingLess.setTriggerEvent('click', () => {
-            this.changeAlternativeAmount(-1);
+            this.changeAlternativeAmount(-5);
         });
 
         // Amount Settings Input
         this.amountSettingInput = this.addElement('input', 'amountSettingInput', this.amountSetting);
+        this.amountSettingInput.setStyle('flex', 'center', 'alignCenter', 'cOrigin','fs2em', 'w3em', 'h0_5em', 'bgLight0_2', 'm0_5em', 'pt0_5em', 'pl0_25em', 'pb0_5em', 'pr0em', 'pointer');
         this.amountSettingInput.element.type = "number";
         this.amountSettingInput.element.value = "5";
         this.amountSettingInput.setTriggerEvent('change', () => {
@@ -77,9 +80,10 @@ class ColorMatch {
         
         // Amount Settings Button - Less
         this.amountSettingMore = this.addElement('div', 'amountSettingMore', this.amountSetting);
-        this.amountSettingMore.element.text = "+";
+        this.amountSettingMore.setStyle('flex', 'center', 'alignCenter', 'textCenter', 'fs2em', 'w1_25em', 'h0_5em', 'bgLight0_2', 'm0_5em', 'p0_25em', 'pointer');
+        this.amountSettingMore.element.innerHTML = "+";
         this.amountSettingMore.setTriggerEvent('click', () => {
-            this.changeAlternativeAmount(1);
+            this.changeAlternativeAmount(5);
         });
         
 
@@ -118,7 +122,7 @@ class ColorMatch {
 
         // Answer Element Container
         this.answerElementContainer = this.addElement('div', 'answerElementContainer', this.applicationAnchor);
-        this.answerElementContainer.setStyle('flex', 'row', 'center', 'alignCenter', 'min-h25pc');
+        this.answerElementContainer.setStyle('flex', 'row', 'center', 'alignCenter', 'min-h35pc');
         
         // Answer Element
         this.answerElementColor = this.addElement('div', 'answerElementColor', this.answerElementContainer);
@@ -126,11 +130,11 @@ class ColorMatch {
         
         // Alternative Answers Element Container
         this.altElementContainer = this.addElement('div', 'alternativeElementsContainer', this.applicationAnchor);
-        this.altElementContainer.setStyle('flex', 'row', 'evenly', 'wrap');
+        this.altElementContainer.setStyle('flex', 'row', 'evenly', 'wrap', 'grow', 'ofY-auto');
 
         // Stats Elements Container
         this.statsElementContainer = this.addElement('div', 'statsElementContainer', this.applicationAnchor);
-        this.statsElementContainer.setStyle('flex', 'row', 'evenly', 'alignCenter', 'fs2em', 'h5em', 'bgDark0_3');
+        this.statsElementContainer.setStyle('flex', 'row', 'evenly', 'alignCenter', 'fs2em', 'h4em', 'min-h4em', 'bgDark0_3');
 
         // Status Elements Array
         this.statusElements = [];
@@ -146,8 +150,10 @@ class ColorMatch {
     }
 
     // Initialize app on startup
-    initialize() {
-        this.newAlternatives();
+    async initialize() {
+        await this.newAlternatives().then(() => {
+            this.newAnswerColor();
+        });
         this.newStats();
     }
 
@@ -157,14 +163,20 @@ class ColorMatch {
     // User Click Answer Alternative handler
 
     // Start New Color Match Game
-    newGame() {
+    async newGame() {
+        this.answerElementColor.setStyle('hidden');
         this.removeCMElementChildren(this.altElementContainer);
-        this.newAlternatives();
+        await this.newAlternatives().then(() => {
+            this.newAnswerColor();
+            this.answerElementColor.unsetStyle('hidden');
+        });
     }
 
     guessColor(_event) {
         let _cmElement = this.getCMElement(_event.target);
-        _cmElement.unsetStyle('scale1_2', 'bSolid', 'bcLight1', 'bw0_2em');
+        _cmElement.unsetStyle('p0_6em', 'm0_2em', 'scale1_05', 'bSolid', 'bcLight1', 'bw0_2em').setStyle('m1em');
+
+        //this.answerElementColor.setStyle('hidden');
         
         if(_cmElement.cmColor == this.answerElementColor.cmColor){
             console.log("Correct guess");
@@ -198,10 +210,11 @@ class ColorMatch {
     }
 
     changeAlternativeAmount(_amount, _set) {
+
         if(_set) {
             this.amountSettingInput.element.value = _amount;
         } else {
-            this.amountSettingInput.element.value += _amount;
+            this.amountSettingInput.element.value = Number(this.amountSettingInput.element.value) + _amount >= 1 ? Number(this.amountSettingInput.element.value) + _amount : 1;
         }
 
         this.alternatives = this.amountSettingInput.element.value;
@@ -219,7 +232,7 @@ class ColorMatch {
         return new Promise((resolve, reject) => {
             let http = new XMLHttpRequest();
 
-            http.responseType = options ? options.responseType : null;
+            http.responseType = options ? options.responseType : "";
 
             http.onreadystatechange = () => {
                 if(http.readyState == 4 && http.status == 200) {
@@ -304,22 +317,32 @@ class ColorMatch {
         });
     }
 
-    // New Alternatives
-    newAlternatives() {
-        for (let i = 0; i < this.alternatives; i++) {
-            console.log('added new alternative');
-            let _cmElement = this.addElement('div', `display${i}`, this.altElementContainer);
-            _cmElement.setStyle('flex', 'row', 'w10em', 'h10em', 'm1em', 'pointer', 'transitionAllEase0_3s');
-            _cmElement.setColor();
-            
-            _cmElement.setTriggerEvent('click', (e) => this.guessColor(e));
-
-            // Hover Over Answer Alternative Effect
-            _cmElement.setTriggerEvent('mouseover', (_event) => this.getCMElement(_event.target).setStyle('scale1_2', 'bSolid', 'bcLight1', 'bw0_2em'));
-            _cmElement.setTriggerEvent('mouseout', (_event) => this.getCMElement(_event.target).unsetStyle('scale1_2', 'bSolid', 'bcLight1', 'bw0_2em'));
-        }
-        
+    // Pick New Answer Color
+    newAnswerColor() {
         this.answerElementColor.setColor(this.getRandomElementColor());
+    }
+
+    // New Alternatives
+    async newAlternatives() {
+        for (let i = 0; i < this.alternatives; i++) {
+            await this.sleep(50 - i).then(this.addAlternative(i));
+        }
+    }
+
+    async addAlternative(_i) {
+        let _cmElement = this.addElement('div', `display${_i}`, this.altElementContainer);
+        _cmElement.setStyle('flex', 'row', 'w10em', 'h10em', 'm1em', 'pointer', 'transitionTransformEase0_3s');
+        _cmElement.setColor();
+        
+        _cmElement.setTriggerEvent('click', (e) => this.guessColor(e));
+
+        // Hover Over Answer Alternative Effect
+        _cmElement.setTriggerEvent('mouseover', (_event) => this.getCMElement(_event.target).unsetStyle('m1em').setStyle('p0_6em', 'm0_2em', 'scale1_05', 'bSolid', 'bcLight1', 'bw0_2em'));
+        _cmElement.setTriggerEvent('mouseout', (_event) => this.getCMElement(_event.target).unsetStyle('p0_6em', 'm0_2em', 'scale1_05', 'bSolid', 'bcLight1', 'bw0_2em').setStyle('m1em'));
+    }
+
+    sleep(ms) {
+        return new Promise(res => setTimeout(res, ms));
     }
 
     // Create New Stats based on Stats json data

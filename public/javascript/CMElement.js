@@ -14,10 +14,12 @@ class CMElement {
 
     setStyle() {
         this.cmStyles.setStyle(this.cmStyle, Array.from(arguments));
+        return this;
     }
 
     unsetStyle() {
         this.cmStyles.unsetStyle(this.cmStyle, Array.from(arguments));
+        return this;
     }
 
     rotate(_deg) {
