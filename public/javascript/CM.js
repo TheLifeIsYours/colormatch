@@ -63,31 +63,23 @@ class ColorMatch {
         
         // Amount Settings Button - Less
         this.amountSettingLess = this.addElement('div', 'amountSettingLess', this.amountSetting);
-        this.amountSettingLess.setStyle('flex', 'center', 'alignCenter', 'textCenter', 'fs2em', 'w1_25em', 'h0_5em', 'bgLight0_2', 'm0_5em', 'p0_25em', 'pointer');
+        this.amountSettingLess.setStyle('flex', 'center', 'alignCenter', 'textCenter', 'fs2em', 'w1_25em', 'h0_5em', 'bgLight0_2', 'm0_5em', 'p0_25em', 'pointer', 'selectNone');
         this.amountSettingLess.element.innerHTML = "-";
-        this.amountSettingLess.setTriggerEvent('click', () => {
-            this.changeAlternativeAmount(-5);
-        });
 
         // Amount Settings Input
         this.amountSettingInput = this.addElement('input', 'amountSettingInput', this.amountSetting);
         this.amountSettingInput.setStyle('flex', 'center', 'alignCenter', 'cOrigin','fs2em', 'w3em', 'h0_5em', 'bgLight0_2', 'm0_5em', 'pt0_5em', 'pl0_25em', 'pb0_5em', 'pr0em', 'pointer');
         this.amountSettingInput.element.type = "number";
         this.amountSettingInput.element.value = "5";
-        this.amountSettingInput.setTriggerEvent('change', () => {
-            this.changeAlternativeAmount(this.amountSettingInput.element.value, true);
-        });
         
         // Amount Settings Button - Less
         this.amountSettingMore = this.addElement('div', 'amountSettingMore', this.amountSetting);
-        this.amountSettingMore.setStyle('flex', 'center', 'alignCenter', 'textCenter', 'fs2em', 'w1_25em', 'h0_5em', 'bgLight0_2', 'm0_5em', 'p0_25em', 'pointer');
+        this.amountSettingMore.setStyle('flex', 'center', 'alignCenter', 'textCenter', 'fs2em', 'w1_25em', 'h0_5em', 'bgLight0_2', 'm0_5em', 'p0_25em', 'pointer', 'selectNone');
         this.amountSettingMore.element.innerHTML = "+";
-        this.amountSettingMore.setTriggerEvent('click', () => {
-            this.changeAlternativeAmount(5);
-        });
         
 
-        // Burger Menu Icon On Click
+        /* Burger Menu Icon On Events
+        ---------------------------------------------------------------------------------------------*/
         this.headerElementBurgerMenuIcon.setTriggerEvent('click', (_event) => {
             this.headerElementBurgerMenuIcon.setStyle('hidden');
             this.burgerMenuOverlay.unsetStyle('hidden');
@@ -95,9 +87,23 @@ class ColorMatch {
 
         this.burgerMenuCloseIconContainer.setTriggerEvent('click', (_event) => {
             this.headerElementBurgerMenuIcon.unsetStyle('hidden');
-            this.burgerMenuOverlay.setStyle('hidden');
+            this.burgerMenuOverlay.setStyle('hidden');        
+            this.newGame();
         });
-        /* End Of Burger Menu */
+
+        this.amountSettingMore.setTriggerEvent('click', () => {
+            this.changeAlternativeAmount(5);
+        });
+
+        this.amountSettingLess.setTriggerEvent('click', () => {
+            this.changeAlternativeAmount(-5);
+        });
+        
+        this.amountSettingInput.setTriggerEvent('change', () => {
+            this.changeAlternativeAmount(this.amountSettingInput.element.value, true);
+        });
+        /* End Of Burger Menu
+        ---------------------------------------------------------------------------------------------*/
 
         // Header Title
         this.headerElementTitle = this.addElement('div', 'headerElementTitle', this.headerElementContainer);
@@ -166,8 +172,10 @@ class ColorMatch {
     async newGame() {
         this.answerElementColor.setStyle('hidden');
         this.removeCMElementChildren(this.altElementContainer);
+
         await this.newAlternatives().then(() => {
             this.newAnswerColor();
+        }).then(() => {
             this.answerElementColor.unsetStyle('hidden');
         });
     }
@@ -194,6 +202,8 @@ class ColorMatch {
         this.stats.Guesses += 1;
         this.stats.Correct += 1;
 
+        this.changeAlternativeAmount(1);
+
         this.getGif("win, correct, best, awesome, yes");
         this.gifOverlayElementText.element.innerHTML = "You guessed correct!";
         this.gifOverlayElementText.setStyle('cGreen');
@@ -204,13 +214,14 @@ class ColorMatch {
         this.stats.Guesses += 1;
         this.stats.Wrong += 1;
 
+        this.changeAlternativeAmount(-1);
+
         this.getGif("wrong, fail, error, no");
         this.gifOverlayElementText.element.innerHTML = "You guessed wrong!";
         this.gifOverlayElementText.setStyle('cRed');
     }
 
     changeAlternativeAmount(_amount, _set) {
-
         if(_set) {
             this.amountSettingInput.element.value = _amount;
         } else {
@@ -218,8 +229,6 @@ class ColorMatch {
         }
 
         this.alternatives = this.amountSettingInput.element.value;
-        
-        this.newGame();
     }
 
     /* END CORE GAME MECHANICS
@@ -275,9 +284,9 @@ class ColorMatch {
     }
 
     // Hide Gif function
-    hideGifOverlay(delay) {
+    async hideGifOverlay(delay) {
         delay = delay || 0;
-        setTimeout(() => {
+        setTimeout(async () => {
             this.gifOverlayElementContainer.setStyle('hidden');
             this.removeCMElementChildren(this.gifOverlayElementImageContainer);
             this.newGame();
@@ -347,6 +356,8 @@ class ColorMatch {
 
     // Create New Stats based on Stats json data
     newStats() {
+        this.getStatsFromCookies();
+
         Object.keys(this.stats).forEach((key) => {
             let _cmElement = this.addElement('div', `statsElement${key}`, this.statsElementContainer);
             _cmElement.element.setAttribute('data', key);
@@ -355,6 +366,30 @@ class ColorMatch {
 
             this.statusElements.push(_cmElement);
         });
+    }
+
+    getStatsFromCookies() {
+        if(!this.getCookie("stats")) {
+            this.setCookie("stats", this.stats);
+        } else {
+            this.stats = JSON.parse(this.getCookie("stats"));
+        }
+
+        this.addAlternative(this.stats.Correct - this.stats.Wrong, true);
+    }
+
+    // Update Status Element
+    updateStatusElements() {
+        Object.keys(this.stats).forEach((key) => {
+            this.statusElements.forEach((statusElement) => {
+                if(statusElement.element.getAttribute('data') == key){
+                    statusElement.element.value = this.stats[key];
+                    statusElement.element.innerHTML = `${key}: ${this.stats[key]}`;
+                }
+            });
+        });
+
+        this.setCookie("stats", this.stats);
     }
 
     // Add New Color Match Element 
@@ -389,18 +424,6 @@ class ColorMatch {
         return this.getCMElement(this.altElementContainer.element.children[rnd]).cmColor;
     }
 
-    // Update Status Element
-    updateStatusElements() {
-        Object.keys(this.stats).forEach((key) => {
-            this.statusElements.forEach((statusElement) => {
-                if(statusElement.element.getAttribute('data') == key){
-                    statusElement.element.value = this.stats[key];
-                    statusElement.element.innerHTML = `${key}: ${this.stats[key]}`;
-                }
-            });
-        });
-    }
-
     // Remove Color Match Element Children and DOM Elements
     removeCMElementChildren (_cmElementParent) {
         while(_cmElementParent.element.firstChild) {
@@ -414,6 +437,32 @@ class ColorMatch {
 
             _cmElementParent.element.removeChild(_cmElementParent.element.firstChild);
         }
+    }
+
+    getCookie(_key) {
+        let cookies = document.cookie.split(';');
+        //console.log(cookies);
+    
+        for(let cookie of cookies) {
+            let cookieArr = cookie.split('=');
+            console.log(cookieArr);
+
+            if(cookieArr[0] == _key){
+                return cookieArr[1];
+            }
+        }
+    }
+
+    setCookie(_key, _data, _exdays) {
+        if(typeof(_data) == typeof(new Object)){
+            _data = JSON.stringify(_data);
+        }
+        
+        let newDate = new Date();
+        _exdays = `expires=${newDate.toUTCString(newDate.setTime(newDate.getTime() + (_exdays * 864e5)))}`;
+
+        console.log(`${_key}=${_data}`);
+        document.cookie = `${_key}=${_data};${_exdays};path=/`;
     }
 
 }

@@ -31,6 +31,7 @@ class CMStyles {
         "alignCenter": {"property": 'align-items', "attribute": 'center'},
 
         "textCenter": {"property": 'text-align', "attribute": 'center'},
+        "selectNone": {"property": 'user-select', "attribute": 'none'},
         
         "pointer": {"property": 'cursor', "attribute": 'pointer'},
 

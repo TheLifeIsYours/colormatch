@@ -9,6 +9,7 @@ html, body {
     font-family: Arial, sans-serif;
     color: #e2e2e2;
     background: #272727;
+    overflow: hidden;
   }
   
   #main {
