@@ -268,7 +268,7 @@ class ColorMatch {
 
         this.changeAlternativeAmount(-1);
 
-        this.getGif("wrong, fail, error, no");
+        this.getGif("wrong, fail, error, sad, angry, no");
         this.gifOverlayElementText.element.innerHTML = "You guessed wrong!";
         this.gifOverlayElementText.setStyle('cRed');
     }
