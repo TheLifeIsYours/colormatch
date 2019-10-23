@@ -9,11 +9,19 @@ class ColorMatch {
 
         this.cmElements = [];
 
+        // Status Elements Array
+        this.statusElements = [];
+
+        // Status Element json data
+        this.statsTemplate = {"Guesses": 0, "Correct": 0, "Wrong": 0};
+        this.stats = this.statsTemplate;
+
         // Header
         this.headerElementContainer = this.addElement('div', 'headerElementContainer', this.applicationAnchor);
         this.headerElementContainer.setStyle('flex', 'row', 'between', 'alignCenter', 'h5em', 'min-h5em', 'bgDark0_6');
 
-        /* Start Of Burger Menu */
+        /* Start Of Burger Menu
+        ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         // Burger Menu
         this.headerElementBurgerMenuIcon = this.addElement('div', 'headerElementBurgerMenu', this.headerElementContainer);
         this.headerElementBurgerMenuIcon.setStyle('flex', 'column', 'evenly', 'alignCenter', 'w2em', 'h2_5em', 'ml2em', 'pointer');
@@ -57,13 +65,22 @@ class ColorMatch {
         this.burgerMenuSettingsContainer = this.addElement('div', 'burgerMenuSettings', this.burgerMenuOverlay);
         this.burgerMenuSettingsContainer.setStyle('flex', 'column', 'center', 'alignCenter', 'grow');
 
+        /* Amount Settings
+        ---------------------------------------------------------------------------------------------*/
+        this.burgerMenuSettingsAmount = this.addElement('div', '', this.burgerMenuSettingsContainer);
+        this.burgerMenuSettingsContainer.setStyle('flex', 'column', 'center', 'alignCenter');
+
+        this.burgerMenuSettingsAmountTitle = this.addElement('div', 'burgerMenuSettingsAmountTitle', this.burgerMenuSettingsAmount);
+        this.burgerMenuSettingsAmountTitle.setStyle('flex', 'center', 'alignCenter', 'textCenter', 'fs2em', 'm0_5em');
+        this.burgerMenuSettingsAmountTitle.element.innerHTML = "Amount";
+
         // Amount Settings Container
-        this.amountSetting = this.addElement('div', 'amountSetting', this.burgerMenuSettingsContainer);
+        this.amountSetting = this.addElement('div', 'amountSetting', this.burgerMenuSettingsAmount);
         this.amountSetting.setStyle('flex', 'row', 'center', 'alignCenter');
         
         // Amount Settings Button - Less
         this.amountSettingLess = this.addElement('div', 'amountSettingLess', this.amountSetting);
-        this.amountSettingLess.setStyle('flex', 'center', 'alignCenter', 'textCenter', 'fs2em', 'w1_25em', 'h0_5em', 'bgLight0_2', 'm0_5em', 'p0_25em', 'pointer', 'selectNone');
+        this.amountSettingLess.setStyle('flex', 'center', 'alignCenter', 'textCenter', 'fs2em', 'w1_25em', 'h0_5em', 'bgLight0_4', 'm0_5em', 'p0_25em', 'pointer', 'selectNone');
         this.amountSettingLess.element.innerHTML = "-";
 
         // Amount Settings Input
@@ -74,8 +91,22 @@ class ColorMatch {
         
         // Amount Settings Button - Less
         this.amountSettingMore = this.addElement('div', 'amountSettingMore', this.amountSetting);
-        this.amountSettingMore.setStyle('flex', 'center', 'alignCenter', 'textCenter', 'fs2em', 'w1_25em', 'h0_5em', 'bgLight0_2', 'm0_5em', 'p0_25em', 'pointer', 'selectNone');
+        this.amountSettingMore.setStyle('flex', 'center', 'alignCenter', 'textCenter', 'fs2em', 'w1_25em', 'h0_5em', 'bgLight0_4', 'm0_5em', 'p0_25em', 'pointer', 'selectNone');
         this.amountSettingMore.element.innerHTML = "+";
+
+        /* Cookies Settings
+        ---------------------------------------------------------------------------------------------*/
+        this.burgerMenuSettingsCookies = this.addElement('div', '', this.burgerMenuSettingsContainer);
+        this.burgerMenuSettingsCookies.setStyle('flex', 'column', 'center', 'alignCenter');
+
+        this.burgerMenuSettingsCookiesTitle = this.addElement('div', 'burgerMenuSettingsCookies', this.burgerMenuSettingsCookies);
+        this.burgerMenuSettingsCookiesTitle.setStyle('flex', 'center', 'alignCenter', 'textCenter', 'fs2em', 'm0_5em');
+        this.burgerMenuSettingsCookiesTitle.element.innerHTML = "Cookies";
+
+        // Cookies Settings Button - Clear
+        this.cookiesSettingClear = this.addElement('div', 'amountSettingMore', this.burgerMenuSettingsCookies);
+        this.cookiesSettingClear.setStyle('flex', 'center', 'alignCenter', 'textCenter', 'fs2em', 'h0_5em', 'bgLight0_4', 'p0_5em', 'pointer', 'selectNone');
+        this.cookiesSettingClear.element.innerHTML = "Clear Score";
         
 
         /* Burger Menu Icon On Events
@@ -102,8 +133,12 @@ class ColorMatch {
         this.amountSettingInput.setTriggerEvent('change', () => {
             this.changeAlternativeAmount(this.amountSettingInput.element.value, true);
         });
+
+        this.cookiesSettingClear.setTriggerEvent('click', () => {
+            this.resetGame();
+        });
         /* End Of Burger Menu
-        ---------------------------------------------------------------------------------------------*/
+        ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
         // Header Title
         this.headerElementTitle = this.addElement('div', 'headerElementTitle', this.headerElementContainer);
@@ -142,25 +177,15 @@ class ColorMatch {
         this.statsElementContainer = this.addElement('div', 'statsElementContainer', this.applicationAnchor);
         this.statsElementContainer.setStyle('flex', 'row', 'evenly', 'alignCenter', 'fs2em', 'h4em', 'min-h4em', 'bgDark0_3');
 
-        // Status Elements Array
-        this.statusElements = [];
-
-        // Status Element json data
-        this.stats = {
-            "Guesses": 0,
-            "Correct": 0,
-            "Wrong": 0
-        };
-
         this.initialize(this.applicationAnchor);
     }
 
     // Initialize app on startup
     async initialize() {
+        this.initializeStats();
         await this.newAlternatives().then(() => {
             this.newAnswerColor();
         });
-        this.newStats();
     }
 
     /* START CORE GAME MECHANICS
@@ -223,12 +248,23 @@ class ColorMatch {
 
     changeAlternativeAmount(_amount, _set) {
         if(_set) {
-            this.amountSettingInput.element.value = _amount;
+            console.log(_amount >= 5 ? _amount : 5 + _amount);
+            this.amountSettingInput.element.value = _amount >= 1 ? _amount : 1;
         } else {
             this.amountSettingInput.element.value = Number(this.amountSettingInput.element.value) + _amount >= 1 ? Number(this.amountSettingInput.element.value) + _amount : 1;
         }
 
         this.alternatives = this.amountSettingInput.element.value;
+    }
+
+    resetGame() {
+        if(!confirm("This will clear your score, and wipe all saved cookies. \n Are you sure you want to do this?")) return;
+
+        this.setCookie("stats", this.statsTemplate);
+        this.stats = this.statsTemplate;
+        this.changeAlternativeAmount(5, true);
+        this.updateStatusElements();
+        this.newGame();
     }
 
     /* END CORE GAME MECHANICS
@@ -354,8 +390,8 @@ class ColorMatch {
         return new Promise(res => setTimeout(res, ms));
     }
 
-    // Create New Stats based on Stats json data
-    newStats() {
+    // Create New Stats based on Stats json data or cookies
+    initializeStats() {
         this.getStatsFromCookies();
 
         Object.keys(this.stats).forEach((key) => {
@@ -368,6 +404,7 @@ class ColorMatch {
         });
     }
 
+    // Get Stats From Cookies
     getStatsFromCookies() {
         if(!this.getCookie("stats")) {
             this.setCookie("stats", this.stats);
@@ -375,7 +412,7 @@ class ColorMatch {
             this.stats = JSON.parse(this.getCookie("stats"));
         }
 
-        this.addAlternative(this.stats.Correct - this.stats.Wrong, true);
+        this.changeAlternativeAmount(this.stats.Correct - this.stats.Wrong, true);
     }
 
     // Update Status Element
@@ -445,7 +482,6 @@ class ColorMatch {
     
         for(let cookie of cookies) {
             let cookieArr = cookie.split('=');
-            console.log(cookieArr);
 
             if(cookieArr[0] == _key){
                 return cookieArr[1];
@@ -461,7 +497,6 @@ class ColorMatch {
         let newDate = new Date();
         _exdays = `expires=${newDate.toUTCString(newDate.setTime(newDate.getTime() + (_exdays * 864e5)))}`;
 
-        console.log(`${_key}=${_data}`);
         document.cookie = `${_key}=${_data};${_exdays};path=/`;
     }
 
