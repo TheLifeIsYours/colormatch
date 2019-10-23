@@ -73,10 +73,13 @@ class CMElement {
         
         this.cmStyles.setStyle(this.cmStyle, 'background', _color);
         this.cmColor = _color;
+
+        return this;
     }
 
     setTriggerEvent(event, callback) {
         this.element.addEventListener(event, callback);
+        return this;
     }
 
     destroy(){

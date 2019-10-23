@@ -17,53 +17,53 @@ class ColorMatch {
         this.stats = this.statsTemplate;
 
         // Header
-        this.headerElementContainer = this.addElement('div', 'headerElementContainer', this.applicationAnchor);
-        this.headerElementContainer.setStyle('flex', 'row', 'between', 'alignCenter', 'h5em', 'min-h5em', 'bgDark0_6');
+        this.headerElementContainer = this.addElement('div', 'headerElementContainer', this.applicationAnchor)
+        .setStyle('flex', 'row', 'between', 'alignCenter', 'h5em', 'min-h5em', 'bgDark0_6');
 
         /* Start Of Burger Menu
         ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         // Burger Menu
-        this.headerElementBurgerMenuIcon = this.addElement('div', 'headerElementBurgerMenu', this.headerElementContainer);
-        this.headerElementBurgerMenuIcon.setStyle('flex', 'column', 'evenly', 'alignCenter', 'w2em', 'h2_5em', 'ml2em', 'pointer');
+        this.headerElementBurgerMenuIcon = this.addElement('div', 'headerElementBurgerMenu', this.headerElementContainer)
+        .setStyle('flex', 'column', 'evenly', 'alignCenter', 'w2em', 'h2_5em', 'ml2em', 'pointer');
         
         /*  Start Of Burger Menu Icon */
-        this.headerElementBurgerMenuIcon_1 = this.addElement('div', '', this.headerElementBurgerMenuIcon);
-        this.headerElementBurgerMenuIcon_1.setStyle('w100pc', 'h0_25em', 'bgLight1');
+        this.headerElementBurgerMenuIcon_1 = this.addElement('div', '', this.headerElementBurgerMenuIcon)
+        .setStyle('w100pc', 'h0_25em', 'bgLight1');
 
-        this.headerElementBurgerMenuIcon_2 = this.addElement('div', '', this.headerElementBurgerMenuIcon);
-        this.headerElementBurgerMenuIcon_2.setStyle('w100pc', 'h0_25em', 'bgLight1');
+        this.headerElementBurgerMenuIcon_2 = this.addElement('div', '', this.headerElementBurgerMenuIcon)
+        .setStyle('w100pc', 'h0_25em', 'bgLight1');
         
-        this.headerElementBurgerMenuIcon_3 = this.addElement('div', '', this.headerElementBurgerMenuIcon);
-        this.headerElementBurgerMenuIcon_3.setStyle('w100pc', 'h0_25em', 'bgLight1');
+        this.headerElementBurgerMenuIcon_3 = this.addElement('div', '', this.headerElementBurgerMenuIcon)
+        .setStyle('w100pc', 'h0_25em', 'bgLight1');
         /* End Of Burger Menu Icon */
 
         // Burger Menu Overlay
-        this.burgerMenuOverlay = this.addElement('div', 'burgerMenuOverlay', this.applicationAnchor);
-        this.burgerMenuOverlay.setStyle('absolute', 't0em', 'l0em', 'flex', 'column', 'between', 'bgDark0_8', 'w100pc', 'h100pc', 'hidden');
+        this.burgerMenuOverlay = this.addElement('div', 'burgerMenuOverlay', this.applicationAnchor)
+        .setStyle('absolute', 't0em', 'l0em', 'flex', 'column', 'between', 'bgDark0_8', 'w100pc', 'h100pc', 'hidden');
 
         // Burger Menu Header
-        this.burgerMenuHeader = this.addElement('div', 'burgerMenuHeader', this.burgerMenuOverlay);
-        this.burgerMenuHeader.setStyle('flex', 'row', 'between', 'alignCenter', 'h5em', 'min-h5em', 'bgLight0_2');
+        this.burgerMenuHeader = this.addElement('div', 'burgerMenuHeader', this.burgerMenuOverlay)
+        .setStyle('flex', 'row', 'between', 'alignCenter', 'h5em', 'min-h5em', 'bgLight0_2');
         
-        this.burgerMenuCloseIconContainer = this.addElement('div', 'burgerMenuCloseIcon', this.burgerMenuHeader);
-        this.burgerMenuCloseIconContainer.setStyle('flex', 'column', 'evenly', 'alignCenter', 'w2em', 'h2_5em', 'ml2em', 'pointer');
+        this.burgerMenuCloseIconContainer = this.addElement('div', 'burgerMenuCloseIcon', this.burgerMenuHeader)
+        .setStyle('flex', 'column', 'evenly', 'alignCenter', 'w2em', 'h2_5em', 'ml2em', 'pointer');
         
         // Burger Close Icon
-        this.burgerMenuCloseIconImage = this.addElement('img', '', this.burgerMenuCloseIconContainer);
-        this.burgerMenuCloseIconImage.element.src = "public/images/icons/X.png";
-        this.burgerMenuCloseIconImage.setStyle('w100pc');
+        this.burgerMenuCloseIconImage = this.addElement('img', '', this.burgerMenuCloseIconContainer)
+        .setStyle('w100pc')
+        .element.src = "public/images/icons/X.png";
         
         // Burger Menu Title
-        this.burgerMenuHeaderTitle = this.addElement('div', 'burgerMenuHeaderTitle', this.burgerMenuHeader);
-        this.burgerMenuHeaderTitle.element.innerHTML = "Settings";
-        this.burgerMenuHeaderTitle.setStyle('fs3em');
+        this.burgerMenuHeaderTitle = this.addElement('div', 'burgerMenuHeaderTitle', this.burgerMenuHeader)
+        .setStyle('fs3em')
+        .content("Settings");
 
         // Spacing Element
         this.spacingElement = this.addElement('div', 'headerSpacerElement', this.burgerMenuHeader);
 
         // Burger Menu Row
-        this.burgerMenuSettingsContainer = this.addElement('div', 'burgerMenuSettings', this.burgerMenuOverlay);
-        this.burgerMenuSettingsContainer.setStyle('flex', 'column', 'center', 'alignCenter', 'grow');
+        this.burgerMenuSettingsContainer = this.addElement('div', 'burgerMenuSettings', this.burgerMenuOverlay)
+        .setStyle('flex', 'column', 'center', 'alignCenter', 'grow');
 
         /* Amount Settings
         ---------------------------------------------------------------------------------------------*/
@@ -171,43 +171,43 @@ class ColorMatch {
         ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
         // Header Title
-        this.headerElementTitle = this.addElement('div', 'headerElementTitle', this.headerElementContainer);
-        this.headerElementTitle.element.innerHTML = "Color Match";
-        this.headerElementTitle.setStyle('fs3em');
+        this.headerElementTitle = this.addElement('div', 'headerElementTitle', this.headerElementContainer)
+        .setStyle('fs3em')
+        .content("Color Match");
         
         // Spacing Element
         this.spacingElement = this.addElement('div', 'headerSpacerElement', this.headerElementContainer);
 
         // Gif Overlay Container
-        this.gifOverlayElementContainer = this.addElement('div', 'gifOverlayElementContainer', this.applicationAnchor);
-        this.gifOverlayElementContainer.setStyle('absolute', 't0em', 'l0em', 'flex', 'column', 'center', 'alignCenter', 'w100pc', 'h100pc', 'bgDark0_8', 'hidden');
-        this.gifOverlayElementContainer.setTriggerEvent('click', () => {
+        this.gifOverlayElementContainer = this.addElement('div', 'gifOverlayElementContainer', this.applicationAnchor)
+        .setStyle('absolute', 't0em', 'l0em', 'flex', 'column', 'center', 'alignCenter', 'w100pc', 'h100pc', 'bgDark0_8', 'hidden', 'pointer')
+        .setTriggerEvent('click', () => {
             this.hideGifOverlay()
         });
 
         // Gif Overlay Text Display 
-        this.gifOverlayElementText = this.addElement('div', 'gifOverlayElementText', this.gifOverlayElementContainer);
-        this.gifOverlayElementText.setStyle('fs5em', 'm1em', 'textCenter');
+        this.gifOverlayElementText = this.addElement('div', 'gifOverlayElementText', this.gifOverlayElementContainer)
+        .setStyle('fs5em', 'm1em', 'textCenter');
 
         // Gif Overlay Image Display
-        this.gifOverlayElementImageContainer = this.addElement('div', 'gifOverlayElementImageContainer', this.gifOverlayElementContainer);
-        this.gifOverlayElementImageContainer.setStyle('flex', 'center', 'alignCenter', 'w90pc', 'h50pc');
+        this.gifOverlayElementImageContainer = this.addElement('div', 'gifOverlayElementImageContainer', this.gifOverlayElementContainer)
+        .setStyle('flex', 'center', 'alignCenter', 'w90pc', 'h50pc');
 
         // Answer Element Container
-        this.answerElementContainer = this.addElement('div', 'answerElementContainer', this.applicationAnchor);
-        this.answerElementContainer.setStyle('flex', 'row', 'center', 'alignCenter', 'min-h35pc');
+        this.answerElementContainer = this.addElement('div', 'answerElementContainer', this.applicationAnchor)
+        .setStyle('flex', 'row', 'center', 'alignCenter', 'min-h35pc');
         
         // Answer Element
-        this.answerElementColor = this.addElement('div', 'answerElementColor', this.answerElementContainer);
-        this.answerElementColor.setStyle('w20em', 'h20em', 'bgLight1');
+        this.answerElementColor = this.addElement('div', 'answerElementColor', this.answerElementContainer)
+        .setStyle('w20em', 'h20em', 'bgLight1');
         
         // Alternative Answers Element Container
-        this.altElementContainer = this.addElement('div', 'alternativeElementsContainer', this.applicationAnchor);
-        this.altElementContainer.setStyle('flex', 'row', 'evenly', 'wrap', 'grow', 'ofY-auto');
+        this.altElementContainer = this.addElement('div', 'alternativeElementsContainer', this.applicationAnchor)
+        .setStyle('flex', 'row', 'evenly', 'wrap', 'grow', 'ofY-auto');
 
         // Stats Elements Container
-        this.statsElementContainer = this.addElement('div', 'statsElementContainer', this.applicationAnchor);
-        this.statsElementContainer.setStyle('flex', 'row', 'evenly', 'alignCenter', 'fs2em', 'h4em', 'min-h4em', 'bgDark0_3');
+        this.statsElementContainer = this.addElement('div', 'statsElementContainer', this.applicationAnchor)
+        .setStyle('flex', 'row', 'evenly', 'alignCenter', 'fs2em', 'h4em', 'min-h4em', 'bgDark0_3');
 
         this.initialize(this.applicationAnchor);
     }
@@ -351,9 +351,11 @@ class ColorMatch {
 
         await this.sleep(_delay);
 
-        this.gifOverlayElementContainer.setStyle('hidden');
-        this.removeCMElementChildren(this.gifOverlayElementImageContainer);
-        this.newGame();
+        if(this.gifOverlayElementImageContainer.element.hasChildNodes()) {
+            this.gifOverlayElementContainer.setStyle('hidden');
+            this.removeCMElementChildren(this.gifOverlayElementImageContainer);
+            this.newGame();
+        }
     }
 
     // Calculate Gif Duration
