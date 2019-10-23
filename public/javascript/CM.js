@@ -54,10 +54,33 @@ class ColorMatch {
         this.spacingElement = this.addElement('div', 'headerSpacerElement', this.burgerMenuHeader);
 
         // Burger Menu Row
-        this.burgerMenuSettings = this.addElement('div', 'burgerMenuSettings', this.burgerMenuOverlay);
-        this.burgerMenuSettings.setStyle('flex', 'column', 'center', 'alignCenter', 'grow');
+        this.burgerMenuSettingsContainer = this.addElement('div', 'burgerMenuSettings', this.burgerMenuOverlay);
+        this.burgerMenuSettingsContainer.setStyle('flex', 'column', 'center', 'alignCenter', 'grow');
 
-        this.amountSettings = this.addElement('div', 'amountSettings', this.burgerMenuSettings);
+        // Amount Settings Container
+        this.amountSetting = this.addElement('div', 'amountSetting', this.burgerMenuSettingsContainer);
+        
+        // Amount Settings Button - Less
+        this.amountSettingLess = this.addElement('div', 'amountSettingLess', this.amountSetting);
+        this.amountSettingLess.element.text = "-";
+        this.amountSettingLess.setTriggerEvent('click', () => {
+            this.changeAlternativeAmount(-1);
+        });
+
+        // Amount Settings Input
+        this.amountSettingInput = this.addElement('input', 'amountSettingInput', this.amountSetting);
+        this.amountSettingInput.element.type = "number";
+        this.amountSettingInput.element.value = "5";
+        this.amountSettingInput.setTriggerEvent('change', () => {
+            this.changeAlternativeAmount(this.amountSettingInput.element.value, true);
+        });
+        
+        // Amount Settings Button - Less
+        this.amountSettingMore = this.addElement('div', 'amountSettingMore', this.amountSetting);
+        this.amountSettingMore.element.text = "+";
+        this.amountSettingMore.setTriggerEvent('click', () => {
+            this.changeAlternativeAmount(1);
+        });
         
 
         // Burger Menu Icon On Click
@@ -83,7 +106,7 @@ class ColorMatch {
         // Gif Overlay Container
         this.gifOverlayElementContainer = this.addElement('div', 'gifOverlayElementContainer', this.applicationAnchor);
         this.gifOverlayElementContainer.setStyle('absolute', 't0em', 'l0em', 'flex', 'column', 'center', 'alignCenter', 'w100pc', 'h100pc', 'bgDark0_8', 'hidden');
-        this.gifOverlayElementContainer.setTriggerEvent('click', this.hideGifOverlay());
+        this.gifOverlayElementContainer.setTriggerEvent('click', this.hideGifOverlay);
 
         // Gif Overlay Text Display 
         this.gifOverlayElementText = this.addElement('div', 'gifOverlayElementText', this.gifOverlayElementContainer);
@@ -95,7 +118,7 @@ class ColorMatch {
 
         // Answer Element Container
         this.answerElementContainer = this.addElement('div', 'answerElementContainer', this.applicationAnchor);
-        this.answerElementContainer.setStyle('flex', 'row', 'center', 'h20pc');
+        this.answerElementContainer.setStyle('flex', 'row', 'center', 'alignCenter', 'min-h25pc');
         
         // Answer Element
         this.answerElementColor = this.addElement('div', 'answerElementColor', this.answerElementContainer);
@@ -128,7 +151,17 @@ class ColorMatch {
         this.newStats();
     }
 
+    /* START CORE GAME MECHANICS
+    ---------------------------------------------------------------------------------------------*/
+
     // User Click Answer Alternative handler
+
+    // Start New Color Match Game
+    newGame() {
+        this.removeCMElementChildren(this.altElementContainer);
+        this.newAlternatives();
+    }
+
     guessColor(_event) {
         let _cmElement = this.getCMElement(_event.target);
         _cmElement.unsetStyle('scale1_2', 'bSolid', 'bcLight1', 'bw0_2em');
@@ -163,6 +196,21 @@ class ColorMatch {
         this.gifOverlayElementText.element.innerHTML = "You guessed wrong!";
         this.gifOverlayElementText.setStyle('cRed');
     }
+
+    changeAlternativeAmount(_amount, _set) {
+        if(_set) {
+            this.amountSettingInput.element.value = _amount;
+        } else {
+            this.amountSettingInput.element.value += _amount;
+        }
+
+        this.alternatives = this.amountSettingInput.element.value;
+        
+        this.newGame();
+    }
+
+    /* END CORE GAME MECHANICS
+    ---------------------------------------------------------------------------------------------*/
 
     // XMLHttp Get function
     request(_url, options) {
@@ -203,7 +251,7 @@ class ColorMatch {
     // Async Display Gif function
     async displayGif(_url) {
         let _cmElement = this.addElement('img', 'gifOverlayElementImage', this.gifOverlayElementImageContainer);
-        _cmElement.setStyle('wInherit', 'hInherit', 'max-w100pc', 'max-h100pc');
+        _cmElement.setStyle('hInherit', 'max-w100pc', 'min-w30pc', 'max-h100pc');
         _cmElement.element.src = _url;
 
         this.gifOverlayElementContainer.unsetStyle('hidden');
@@ -219,7 +267,7 @@ class ColorMatch {
         setTimeout(() => {
             this.gifOverlayElementContainer.setStyle('hidden');
             this.removeCMElementChildren(this.gifOverlayElementImageContainer);
-            this.newColors();
+            this.newGame();
         }, delay);
     }
 
@@ -259,6 +307,7 @@ class ColorMatch {
     // New Alternatives
     newAlternatives() {
         for (let i = 0; i < this.alternatives; i++) {
+            console.log('added new alternative');
             let _cmElement = this.addElement('div', `display${i}`, this.altElementContainer);
             _cmElement.setStyle('flex', 'row', 'w10em', 'h10em', 'm1em', 'pointer', 'transitionAllEase0_3s');
             _cmElement.setColor();
@@ -313,6 +362,7 @@ class ColorMatch {
     // Get Random Answer Alternative Element Color
     getRandomElementColor() {
         let rnd = Math.floor(Math.random() * this.altElementContainer.element.children.length);
+        console.log(this.altElementContainer.element.children);
         return this.getCMElement(this.altElementContainer.element.children[rnd]).cmColor;
     }
 
@@ -326,12 +376,6 @@ class ColorMatch {
                 }
             });
         });
-    }
-
-    // Make New Alternative Colors
-    newColors() {
-        this.removeCMElementChildren(this.altElementContainer);
-        this.newAlternatives();
     }
 
     // Remove Color Match Element Children and DOM Elements

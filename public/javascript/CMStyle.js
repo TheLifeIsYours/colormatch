@@ -99,6 +99,12 @@ class CMStyles {
         "max-w50pc": {"property": 'max-width', "attribute": '50%'},
         "max-w75pc": {"property": 'max-width', "attribute": '75%'},
         "max-w100pc": {"property": 'max-width', "attribute": '100%'},
+
+        "min-w25pc": {"property": 'min-width', "attribute": '25%'},
+        "min-w30pc": {"property": 'min-width', "attribute": '30%'},
+        "min-w50pc": {"property": 'min-width', "attribute": '50%'},
+        "min-w75pc": {"property": 'min-width', "attribute": '75%'},
+        "min-w100pc": {"property": 'min-width', "attribute": '100%'},
   
         "h0em": {"property": 'height', "attribute": '0em'},
         "h0_25em": {"property": 'height', "attribute": '0.25em'},
@@ -130,6 +136,13 @@ class CMStyles {
         "max-h50pc": {"property": 'max-height', "attribute": '50%'},
         "max-h75pc": {"property": 'max-height', "attribute": '75%'},
         "max-h100pc": {"property": 'max-height', "attribute": '100%'},
+
+        "min-h20pc": {"property": 'min-height', "attribute": '20%'},
+        "min-h25pc": {"property": 'min-height', "attribute": '25%'},
+        "min-h30pc": {"property": 'min-height', "attribute": '30%'},
+        "min-h50pc": {"property": 'min-height', "attribute": '50%'},
+        "min-h75pc": {"property": 'min-height', "attribute": '75%'},
+        "min-h100pc": {"property": 'min-height', "attribute": '100%'},
 
         "cGreen": {"property": 'color', "attribute": '#0f0'},
         "cRed": {"property": 'color', "attribute": '#f00'},
