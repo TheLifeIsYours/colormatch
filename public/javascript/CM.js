@@ -39,7 +39,8 @@ class ColorMatch {
 
         // Burger Menu Overlay
         this.burgerMenuOverlay = this.addElement('div', 'burgerMenuOverlay', this.applicationAnchor)
-        .setStyle('absolute', 't0em', 'l0em', 'flex', 'column', 'between', 'bgDark0_8', 'w100pc', 'h100pc', 'hidden');
+        .setStyle('absolute', 't0em', 'l0em', 'flex', 'column', 'between', 'w100pc', 'h100pc', 'hidden')
+        .background("#151515");
 
         // Burger Menu Header
         this.burgerMenuHeader = this.addElement('div', 'burgerMenuHeader', this.burgerMenuOverlay)
@@ -207,7 +208,7 @@ class ColorMatch {
 
         // Stats Elements Container
         this.statsElementContainer = this.addElement('div', 'statsElementContainer', this.applicationAnchor)
-        .setStyle('flex', 'row', 'evenly', 'alignCenter', 'fs2em', 'h4em', 'min-h4em', 'bgDark0_3');
+        .setStyle('flex', 'row', 'evenly', 'alignCenter', 'fs2em', 'h4em', 'min-h4em', 'bgDark0_6');
 
         this.initialize(this.applicationAnchor);
     }
