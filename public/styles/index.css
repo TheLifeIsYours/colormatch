@@ -42,23 +42,3 @@ html, body {
   background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.2));
   border-radius: 1em;
 }
-
-::-moz-scrollbar {
-  background: rgba(0, 0, 0, 0.4);
-  border-radius: 1em;
-  width: 0.8em;
-}
-::-moz-scrollbar-thumb {
-  background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.2));
-  border-radius: 1em;
-}
-
-::-o-scrollbar {
-  background: rgba(0, 0, 0, 0.4);
-  border-radius: 1em;
-  width: 0.8em;
-}
-::-o-scrollbar-thumb {
-  background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.2));
-  border-radius: 1em;
-}
