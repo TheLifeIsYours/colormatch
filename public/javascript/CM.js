@@ -361,7 +361,7 @@ class ColorMatch {
     // Async Display Gif function
     async displayGif(_url) {
         let _cmElement = this.addElement('img', 'gifOverlayElementImage', this.gifOverlayElementImageContainer);
-        _cmElement.setStyle('hInherit', 'max-w100pc', 'min-w30pc', 'max-h100pc');
+        _cmElement.setStyle('hAuto', 'max-w100pc', 'min-w30pc', 'max-h100pc');
         _cmElement.element.src = _url;
 
         this.gifOverlayElementContainer.unsetStyle('hidden');

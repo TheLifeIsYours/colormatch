@@ -88,7 +88,9 @@ class CMStyles {
         "scale2": {"property": 'transform', "attribute": 'scale(2)'},
 
         "wInherit": {"property": 'width', "attribute": 'inherit'},
+        "wAuto": {"property": 'width', "attribute": 'auto'},
         "hInherit": {"property": 'height', "attribute": 'inherit'},
+        "hAuto": {"property": 'height', "attribute": 'auto'},
 
         "w0em": {"property": 'width', "attribute": '0em'},
         "w0_25em": {"property": 'width', "attribute": '0.25em'},
@@ -195,6 +197,7 @@ class CMStyles {
         "max-h50pc": {"property": 'max-height', "attribute": '50%'},
         "max-h75pc": {"property": 'max-height', "attribute": '75%'},
         "max-h100pc": {"property": 'max-height', "attribute": '100%'},
+        "max-h150pc": {"property": 'max-height', "attribute": '150%'},
 
         "min-h20pc": {"property": 'min-height', "attribute": '20%'},
         "min-h25pc": {"property": 'min-height', "attribute": '25%'},
