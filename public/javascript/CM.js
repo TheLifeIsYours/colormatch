@@ -42,6 +42,12 @@ class ColorMatch {
         .setStyle('absolute', 't0em', 'l0em', 'flex', 'column', 'between', 'w100pc', 'h100pc', 'hidden')
         .background("#151515");
 
+        this.burgerMenuWaterMark = this.addElement('a', 'burgerMenuWatermark', this.burgerMenuOverlay)
+        .setStyle('absolute', 'l2em', 'b2em', 'fs1_2em', 'textDecorNone')
+        .content("Made by TheLifeIsYours")
+        .setAttribute('href', "http://thelifeisyours.no/")
+        .setAttribute('target', "_blank");
+
         // Burger Menu Header
         this.burgerMenuHeader = this.addElement('div', 'burgerMenuHeader', this.burgerMenuOverlay)
         .setStyle('flex', 'row', 'between', 'alignCenter', 'h5em', 'min-h5em', 'bgLight0_2');

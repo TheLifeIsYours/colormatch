@@ -31,6 +31,7 @@ class CMStyles {
         "alignCenter": {"property": 'align-items', "attribute": 'center'},
 
         "textCenter": {"property": 'text-align', "attribute": 'center'},
+        "textDecorNone": {"property": 'text-decoration', "attribute": 'none'},
         "selectNone": {"property": 'user-select', "attribute": 'none'},
         
         "pointer": {"property": 'cursor', "attribute": 'pointer'},
@@ -71,10 +72,27 @@ class CMStyles {
         "bcDark0_9": {"property": 'border-color', "attribute": 'rgba(0,0,0,0.9)'},
 
         "t0em": {"property": 'top', "attribute": '0em'},
+        "t1em": {"property": 'top', "attribute": '1em'},
+        "t2em": {"property": 'top', "attribute": '2em'},
+        "t3em": {"property": 'top', "attribute": '3em'},
+        "t4em": {"property": 'top', "attribute": '4em'},
+        "t5em": {"property": 'top', "attribute": '5em'},
 
         "t50pc": {"property": 'top', "attribute": '50%'},
 
+        "b0em": {"property": 'bottom', "attribute": '0em'},
+        "b1em": {"property": 'bottom', "attribute": '1em'},
+        "b2em": {"property": 'bottom', "attribute": '2em'},
+        "b3em": {"property": 'bottom', "attribute": '3em'},
+        "b4em": {"property": 'bottom', "attribute": '4em'},
+        "b5em": {"property": 'bottom', "attribute": '5em'},
+
         "l0em": {"property": 'left', "attribute": '0em'},
+        "l1em": {"property": 'left', "attribute": '1em'},
+        "l2em": {"property": 'left', "attribute": '2em'},
+        "l3em": {"property": 'left', "attribute": '3em'},
+        "l4em": {"property": 'left', "attribute": '4em'},
+        "l5em": {"property": 'left', "attribute": '5em'},
 
         "l50pc": {"property": 'left', "attribute": '50%'},
 
