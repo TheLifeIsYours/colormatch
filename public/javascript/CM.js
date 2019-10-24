@@ -295,6 +295,35 @@ class ColorMatch {
     /* END CORE GAME MECHANICS
     ---------------------------------------------------------------------------------------------*/
 
+    // Pick New Answer Color
+    newAnswerColor() {
+        this.answerElementColor.setCmColor(this.getRandomElementColor());
+    }
+
+    // New Alternatives
+    async newAlternatives() {
+        for (let i = 0; i < this.alternatives; i++) {
+            await this.sleep(70 - i);
+            this.addAlternative(i);
+        }
+    }
+
+    async addAlternative(_i) {
+        let _cmElement = this.addElement('div', `display${_i}`, this.altElementContainer)
+        .setStyle('flex', 'row', 'w10em', 'h10em', 'm1em', 'pointer', 'transitionTransformEase0_3s')
+        .setCmColor();
+
+        // Scroll to bottom
+        this.altElementContainer.element.scrollTo(0, _cmElement.element.offsetHeight + _cmElement.element.offsetTop);
+        
+        // Click Event Trigger
+        _cmElement.setTriggerEvent('click', (e) => this.guessColor(e));
+
+        // Hover Over Answer Alternative Effect
+        _cmElement.setTriggerEvent('mouseover', (_event) => this.getCMElement(_event.target).unsetStyle('m1em').setStyle('p0_6em', 'm0_2em', 'scale1_05', 'bSolid', 'bcLight1', 'bw0_2em'));
+        _cmElement.setTriggerEvent('mouseout', (_event) => this.getCMElement(_event.target).unsetStyle('p0_6em', 'm0_2em', 'scale1_05', 'bSolid', 'bcLight1', 'bw0_2em').setStyle('m1em'));
+    }
+
     // XMLHttp Get function
     request(_url, options) {
         return new Promise((resolve, reject) => {
@@ -386,32 +415,7 @@ class ColorMatch {
             console.error(`Error while fetching Gif for duration: ${err}`);
         });
     }
-
-    // Pick New Answer Color
-    newAnswerColor() {
-        this.answerElementColor.setCmColor(this.getRandomElementColor());
-    }
-
-    // New Alternatives
-    async newAlternatives() {
-        for (let i = 0; i < this.alternatives; i++) {
-            await this.sleep(50 - i);
-            this.addAlternative(i);
-        }
-    }
-
-    async addAlternative(_i) {
-        let _cmElement = this.addElement('div', `display${_i}`, this.altElementContainer);
-        _cmElement.setStyle('flex', 'row', 'w10em', 'h10em', 'm1em', 'pointer', 'transitionTransformEase0_3s');
-        _cmElement.setCmColor();
-        
-        _cmElement.setTriggerEvent('click', (e) => this.guessColor(e));
-
-        // Hover Over Answer Alternative Effect
-        _cmElement.setTriggerEvent('mouseover', (_event) => this.getCMElement(_event.target).unsetStyle('m1em').setStyle('p0_6em', 'm0_2em', 'scale1_05', 'bSolid', 'bcLight1', 'bw0_2em'));
-        _cmElement.setTriggerEvent('mouseout', (_event) => this.getCMElement(_event.target).unsetStyle('p0_6em', 'm0_2em', 'scale1_05', 'bSolid', 'bcLight1', 'bw0_2em').setStyle('m1em'));
-    }
-
+    
     sleep(ms) {
         return new Promise(res => setTimeout(res, ms)).catch(console.error);
     }
