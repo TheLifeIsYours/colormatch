@@ -202,7 +202,7 @@ class ColorMatch {
 
         // Answer Element Container
         this.answerElementContainer = this.addElement('div', 'answerElementContainer', this.applicationAnchor)
-        .setStyle('flex', 'row', 'center', 'alignCenter', 'min-h35pc');
+        .setStyle('flex', 'row', 'center', 'alignCenter', 'min-h35pc', 'm0_5em');
         
         // Answer Element
         this.answerElementColor = this.addElement('div', 'answerElementColor', this.answerElementContainer)
