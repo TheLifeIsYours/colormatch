@@ -1,12 +1,16 @@
 /*Start of color match class*/
 class ColorMatch {
     constructor(applicationAnchor, alternatives) {
+        //Secret Giphy api key (don't read)
         this.GIPHY_API_KEY = "CaSL6msn6ZiI41msBeEsg5n2KgImDh9c";
 
+        //Application anchor
         this.applicationAnchor = applicationAnchor;
 
+        //Amount of Alternative colors
         this.alternatives = alternatives || 5;
 
+        //Array to keep Color Match Elements
         this.cmElements = [];
 
         // Status Elements Array
@@ -42,6 +46,7 @@ class ColorMatch {
         .setStyle('absolute', 't0em', 'l0em', 'flex', 'column', 'between', 'w100pc', 'h100pc', 'hidden')
         .background("#151515");
 
+        // Burger Menu watermark, links to creators webpage
         this.burgerMenuWaterMark = this.addElement('a', 'burgerMenuWatermark', this.burgerMenuOverlay)
         .setStyle('absolute', 'l2em', 'b2em', 'fs1_2em', 'textDecorNone')
         .content("Made by TheLifeIsYours")
@@ -52,6 +57,7 @@ class ColorMatch {
         this.burgerMenuHeader = this.addElement('div', 'burgerMenuHeader', this.burgerMenuOverlay)
         .setStyle('flex', 'row', 'between', 'alignCenter', 'h5em', 'min-h5em', 'bgLight0_2');
         
+        // Burger Menu Close Icon
         this.burgerMenuCloseIconContainer = this.addElement('div', 'burgerMenuCloseIcon', this.burgerMenuHeader)
         .setStyle('flex', 'column', 'evenly', 'alignCenter', 'w2em', 'h2_5em', 'ml2em', 'pointer');
         
@@ -120,18 +126,22 @@ class ColorMatch {
         .setStyle('absolute', 't50pc', 'translateCenter', 'l50pc', 'flex', 'column', 'evenly', 'alignCenter', 'w30em', 'h20em', 'hidden')
         .background("#272727");
 
+        // Cookies prompt Text
         this.settingsCookiesPromptText = this.addElement('div', 'cookiesPromptText', this.settingsCookiesPrompt)
         .setStyle('flex', 'row', 'center', 'alignCenter', 'textCenter', 'fs1_4em')
         .content("This will clear your score, and wipe all saved cookies. Are you sure you want to do this?")
         .color("rgb(197, 34, 34)");
 
+        // Cookies prompt buttons container
         this.settingsCookiesPromptConfirmRow = this.addElement('div', '', this.settingsCookiesPrompt)
         .setStyle('flex', 'row', 'center');
-
+        
+        // Cookies prompt confirm yes button
         this.settingsCookiesPromptConfirmYes = this.addElement('div', 'cookiesPromptConfirmYes', this.settingsCookiesPromptConfirmRow)
         .setStyle('flex', 'center', 'alignCenter', 'textCenter', 'fs2em', 'w1_25em', 'h0_5em', 'bgRed0_4', 'm0_5em', 'p0_5em', 'pointer', 'selectNone')
         .content("Yes");
-        
+
+        // Cookies prompt confirm no button
         this.settingsCookiesPromptConfirmNo = this.addElement('div', 'cookiesPromptConfirmNo', this.settingsCookiesPromptConfirmRow)
         .setStyle('flex', 'center', 'alignCenter', 'textCenter', 'fs2em', 'w1_25em', 'h0_5em', 'bgGreen0_4', 'm0_5em', 'p0_5em', 'pointer', 'selectNone')
         .content("No");
@@ -216,12 +226,13 @@ class ColorMatch {
         this.statsElementContainer = this.addElement('div', 'statsElementContainer', this.applicationAnchor)
         .setStyle('flex', 'row', 'evenly', 'alignCenter', 'fs2em', 'h4em', 'min-h4em', 'bgDark0_6');
 
+        // Initialize the game mechanics
         this.initialize(this.applicationAnchor);
     }
 
     // Initialize app on startup
     async initialize() {
-        this.initializeStats();
+        this.initializeStats(); // Create 
         await this.newAlternatives();
         this.newAnswerColor();
     }
@@ -242,54 +253,76 @@ class ColorMatch {
     }
 
     guessColor(_event) {
-        let _cmElement = this.getCMElement(_event.target);
-        _cmElement.unsetStyle('p0_6em', 'm0_2em', 'scale1_05', 'bSolid', 'bcLight1', 'bw0_2em').setStyle('m1em');
+        // Update Guesses count
+        this.stats.Guesses += 1;
 
-        //this.answerElementColor.setStyle('hidden');
+        // Get CM Element 
+        let _cmElement = this.getCMElement(_event.target);
+
+        // Change CM Element Style
+        _cmElement.unsetStyle('p0_6em', 'm0_2em', 'scale1_05', 'bSolid', 'bcLight1', 'bw0_2em').setStyle('m1em');
         
+        // Check if guessed alternative collor is correct
         if(_cmElement.cmColor == this.answerElementColor.cmColor){
             this.correctAnswer();
         } else {
             this.wrongAnswer();
         }
 
+        // Update Statuses
         this.updateStatusElements();
     }
 
     // User Answer Correct handler
     correctAnswer() {
-        this.stats.Guesses += 1;
-        this.stats.Correct += 1;
+        this.stats.Correct += 1; // Update Correct Answers Count
 
+        // Add another alternative
         this.changeAlternativeAmount(1);
 
+        //Dispay Winning related GIF
         this.getGif("win, correct, best, awesome, yes");
-        this.gifOverlayElementText.element.innerHTML = "You guessed correct!";
-        this.gifOverlayElementText.setStyle('cGreen');
+        this.gifOverlayElementText.element.innerHTML = "You guessed correct!"; // Update Answer Text
+        this.gifOverlayElementText.setStyle('cGreen'); // Change Answer Text Color
     }
 
     // User Answer Wrong handler
-    wrongAnswer() {
-        this.stats.Guesses += 1;
-        this.stats.Wrong += 1;
+    /*-------------------------------------------*/
+    /* Updates the stat for wrong answers        */
+    /* Decreases the alternatives by one         */
+    /* Display a gif and text related to losing  */
+    /*-------------------------------------------*/
 
+    wrongAnswer() {
+        this.stats.Wrong += 1; // Update Wrong Answers Count
+
+        // Remove an alternative
         this.changeAlternativeAmount(-1);
 
+        //Displat Losing related GIF
         this.getGif("wrong, fail, error, sad, angry, no");
         this.gifOverlayElementText.element.innerHTML = "You guessed wrong!";
         this.gifOverlayElementText.setStyle('cRed');
     }
 
+    //Function to set amount of Alternatives
+    /*---------------------------------------------------------------------------------*/
+    /* Takes arguments _amount (n) for how many alternatives you want to add or remove */
+    /* and _set (true:false) for setting the count directly to the given _amount       */
+    /*---------------------------------------------------------------------------------*/
     changeAlternativeAmount(_amount, _set) {
+        //If set is true; set the alternatives amounts to given _amount, else; change the alternatives amount by given _amount
         if(_set) {
-            this.amountSettingInput.element.value = _amount >= 1 ? _amount : 5 + _amount;
+            this.alternatives = _amount >= 1 ? _amount : 5 + _amount;
         } else {
-            this.amountSettingInput.element.value = Number(this.amountSettingInput.element.value) + _amount >= 1 ? Number(this.amountSettingInput.element.value) + _amount : 5;
+            this.alternatives = this.alternatives + _amount >= 1 ? this.alternatives + _amount : 5;
         }
 
-        this.alternatives = this.amountSettingInput.element.value;
+        //update the displayed amount
+        this.amountSettingInput.element.value = this.alternatives;
     }
 
+    //Function to reset the game scores, and going back to the beginning
     resetGame() {
         this.setCookie("stats", this.statsTemplate);
         this.stats = this.statsTemplate;
@@ -308,13 +341,16 @@ class ColorMatch {
 
     // New Alternatives
     async newAlternatives() {
+        //Create alternatives
         for (let i = 0; i < this.alternatives; i++) {
-            await this.sleep(70 - i);
-            this.addAlternative(i);
+            await this.sleep(70 - i); //Add a small delay before adding a new alternative
+            this.addAlternative(i); //Add a alternative
         }
     }
 
+    // Function to add a new alternative color into the DOM
     async addAlternative(_i) {
+        //Create alternative color element
         let _cmElement = this.addElement('div', `display${_i}`, this.altElementContainer)
         .setStyle('flex', 'row', 'w10em', 'h10em', 'm1em', 'pointer', 'transitionTransformEase0_3s')
         .setCmColor();
@@ -330,7 +366,7 @@ class ColorMatch {
         _cmElement.setTriggerEvent('mouseout', (_event) => this.getCMElement(_event.target).unsetStyle('p0_6em', 'm0_2em', 'scale1_05', 'bSolid', 'bcLight1', 'bw0_2em').setStyle('m1em'));
     }
 
-    // XMLHttp Get function
+    // Function XMLHttp Get Request
     request(_url, options) {
         return new Promise((resolve, reject) => {
             let http = new XMLHttpRequest();
@@ -490,9 +526,10 @@ class ColorMatch {
         return res;
     }
 
-    // Get Random Answer Alternative Element Color
+    // Get A Random Alternative Element Color
     getRandomElementColor() {
-        let rnd = Math.floor(Math.random() * this.altElementContainer.element.children.length);
+        // Get a random value based on how many alternative colors there are
+        let rnd = Math.floor(Math.random() * this.alternatives);
         return this.getCMElement(this.altElementContainer.element.children[rnd]).cmColor;
     }
 
@@ -511,6 +548,7 @@ class ColorMatch {
         }
     }
 
+    //Function for getting cookies by name
     getCookie(_key) {
         let cookies = document.cookie.split(';');
     
@@ -523,6 +561,7 @@ class ColorMatch {
         }
     }
 
+    //Set cookie
     setCookie(_key, _data, _exdays) {
         if(typeof(_data) == typeof(new Object)){
             _data = JSON.stringify(_data);
