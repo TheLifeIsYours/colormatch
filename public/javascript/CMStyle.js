@@ -442,6 +442,8 @@ class CMStyles {
       };
     }
     
+
+    // Function to set style of cmElement
     setStyle(_cmeStyle, _styles, _attribute) {
         if(Array.isArray(_styles)){
             _styles.forEach((_style) => {
@@ -453,6 +455,7 @@ class CMStyles {
         }
     }
 
+    // Function to unset style of cmElement
     unsetStyle(_cmeStyle, _styles) {
         if(Array.isArray(_styles)){
             _styles.forEach((_style) => {

@@ -458,6 +458,7 @@ class ColorMatch {
         });
     }
     
+    // Function to sleep
     sleep(ms) {
         return new Promise(res => setTimeout(res, ms)).catch(console.error);
     }
